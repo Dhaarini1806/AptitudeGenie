@@ -1,73 +1,113 @@
-# Welcome to your Lovable project
 
-## Project info
+# Aptitude Genie
 
-**URL**: https://lovable.dev/projects/3b84bf03-2bb0-4f21-aa47-bcb027b22864
+Aptitude Genie is a modern web application for practicing aptitude questions, tracking progress, and visualizing results. Built with React, TypeScript, Vite, Tailwind CSS, and shadcn-ui, it features a clean UI and interactive components for an engaging user experience.
 
-## How can I edit this code?
+## Features
 
-There are several ways of editing your application.
+- User authentication (login/register)
+- Game mode for answering aptitude questions
+- Dashboard with recent results, stats overview, and streak calendar
+- Profile management
+- Theme toggle (light/dark)
+- Responsive design for mobile and desktop
+- Rich UI components (cards, tables, charts, accordions, dialogs, etc.)
 
-**Use Lovable**
+## Project Structure
 
-Simply visit the [Lovable Project](https://lovable.dev/projects/3b84bf03-2bb0-4f21-aa47-bcb027b22864) and start prompting.
+- `src/` - Main source code
+	- `components/` - UI and feature components
+		- `auth/` - Authentication forms
+		- `dashboard/` - Dashboard widgets
+		- `game/` - Game logic and display
+		- `layout/` - Layout elements (Header, Footer, MainLayout)
+		- `profile/` - Profile card
+		- `shared/` - Shared components (ThemeToggle)
+		- `ui/` - Reusable UI primitives (accordion, button, dialog, etc.)
+	- `context/` - React context providers (Auth, Game, Theme)
+	- `hooks/` - Custom React hooks
+	- `lib/` - Utility functions and animations
+	- `pages/` - Main pages (Index, NotFound)
+- `public/` - Static assets
+- `index.html` - App entry point
 
-Changes made via Lovable will be committed automatically to this repo.
+## Getting Started
 
-**Use your preferred IDE**
+### Prerequisites
+- Node.js (v18+ recommended)
+- npm
 
-If you want to work locally using your own IDE, you can clone this repo and push changes. Pushed changes will also be reflected in Lovable.
-
-The only requirement is having Node.js & npm installed - [install with nvm](https://github.com/nvm-sh/nvm#installing-and-updating)
-
-Follow these steps:
+### Installation
 
 ```sh
-# Step 1: Clone the repository using the project's Git URL.
 git clone <YOUR_GIT_URL>
-
-# Step 2: Navigate to the project directory.
-cd <YOUR_PROJECT_NAME>
-
-# Step 3: Install the necessary dependencies.
-npm i
-
-# Step 4: Start the development server with auto-reloading and an instant preview.
-npm run dev
+cd AptitudeGenie
+npm install
 ```
 
-**Edit a file directly in GitHub**
+### Development
 
-- Navigate to the desired file(s).
-- Click the "Edit" button (pencil icon) at the top right of the file view.
-- Make your changes and commit the changes.
+```sh
+npm run dev
+```
+The app will be available at `http://localhost:8080`.
 
-**Use GitHub Codespaces**
+### Supabase Integration
 
-- Navigate to the main page of your repository.
-- Click on the "Code" button (green button) near the top right.
-- Select the "Codespaces" tab.
-- Click on "New codespace" to launch a new Codespace environment.
-- Edit files directly within the Codespace and commit and push your changes once you're done.
+Aptitude Genie can use [Supabase](https://supabase.com/) as its backend for authentication, database, and real-time features.
 
-## What technologies are used for this project?
+#### Setup Steps
 
-This project is built with:
+1. Create a project at [Supabase](https://supabase.com/).
+2. Get your Supabase URL and anon key from the project settings.
+3. Install the Supabase client:
+	```sh
+	npm install @supabase/supabase-js
+	```
+4. Add your Supabase credentials to a `.env` file:
+	```env
+	VITE_SUPABASE_URL=your-supabase-url
+	VITE_SUPABASE_ANON_KEY=your-anon-key
+	```
+5. Initialize Supabase in your app (e.g., in `src/lib/supabaseClient.ts`):
+	```ts
+	import { createClient } from '@supabase/supabase-js';
+	export const supabase = createClient(
+	  import.meta.env.VITE_SUPABASE_URL!,
+	  import.meta.env.VITE_SUPABASE_ANON_KEY!
+	);
+	```
+6. Use Supabase APIs for authentication, data storage, and more in your React components and context.
 
-- Vite
-- TypeScript
-- React
-- shadcn-ui
-- Tailwind CSS
+### Build
 
-## How can I deploy this project?
+```sh
+npm run build
+```
 
-Simply open [Lovable](https://lovable.dev/projects/3b84bf03-2bb0-4f21-aa47-bcb027b22864) and click on Share -> Publish.
+### Lint
 
-## Can I connect a custom domain to my Lovable project?
+```sh
+npm run lint
+```
 
-Yes, you can!
+## Technologies Used
 
-To connect a domain, navigate to Project > Settings > Domains and click Connect Domain.
+- [React](https://react.dev/)
+- [TypeScript](https://www.typescriptlang.org/)
+- [Vite](https://vitejs.dev/)
+- [Tailwind CSS](https://tailwindcss.com/)
+- [shadcn/ui](https://ui.shadcn.com/)
+- [Radix UI](https://www.radix-ui.com/)
+- [React Hook Form](https://react-hook-form.com/)
+- [TanStack Query](https://tanstack.com/query/latest)
+- [Recharts](https://recharts.org/)
+ - [Supabase](https://supabase.com/)
 
-Read more here: [Setting up a custom domain](https://docs.lovable.dev/tips-tricks/custom-domain#step-by-step-guide)
+## Customization
+
+Tailwind config (`tailwind.config.ts`) includes custom colors for Aptitude Genie. UI components are organized for easy extension and reuse.
+
+## License
+
+This project is licensed under the MIT License.
