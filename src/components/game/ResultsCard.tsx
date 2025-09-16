@@ -1,4 +1,3 @@
-
 import { GameResult } from "@/context/GameContext";
 import { useAuth } from "@/context/AuthContext";
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
@@ -21,8 +20,13 @@ export function ResultsCard({ result, onPlayAgain, onGoHome }: ResultsCardProps)
   
   useEffect(() => {
     // Start animations with a slight delay
-    setTimeout(() => setShowAnimation(true), 500);
-    setTimeout(() => setShowStreak(true), 1200);
+    const timer1 = setTimeout(() => setShowAnimation(true), 500);
+    const timer2 = setTimeout(() => setShowStreak(true), 1200);
+
+    return () => {
+      clearTimeout(timer1);
+      clearTimeout(timer2);
+    };
   }, []);
   
   // Calculate metrics
@@ -36,8 +40,11 @@ export function ResultsCard({ result, onPlayAgain, onGoHome }: ResultsCardProps)
   const seconds = result.timeTaken % 60;
   const formattedTime = `${minutes}m ${seconds}s`;
 
+
   // Determine if we should show celebration
   const shouldCelebrate = result.accuracy >= 70;
+
+  const streakDays = user?.streak_days || 0;
 
   return (
     <Card className="w-full max-w-2xl genie-card">
@@ -103,7 +110,7 @@ export function ResultsCard({ result, onPlayAgain, onGoHome }: ResultsCardProps)
               <h3 className="text-lg font-medium">Streak</h3>
             </div>
             <div className="flex justify-center space-x-1">
-              {[...Array(Math.min(user.streakDays, 7))].map((_, i) => (
+              {[...Array(Math.min(streakDays, 7))].map((_, i) => (
                 <div 
                   key={i} 
                   className="w-10 h-10 bg-genie-purple-vivid rounded-full flex items-center justify-center text-white font-bold animate-scale-in"
@@ -112,15 +119,15 @@ export function ResultsCard({ result, onPlayAgain, onGoHome }: ResultsCardProps)
                   {i + 1}
                 </div>
               ))}
-              {user.streakDays > 7 && (
+              {streakDays > 7 && (
                 <div className="w-10 h-10 bg-genie-purple-vivid rounded-full flex items-center justify-center text-white font-bold animate-scale-in"
                   style={{ animationDelay: `800ms` }}>
-                  +{user.streakDays - 7}
+                  +{streakDays - 7}
                 </div>
               )}
             </div>
             <p className="mt-2 text-sm text-muted-foreground">
-              {user.streakDays} {user.streakDays === 1 ? 'day' : 'days'} streak
+              {streakDays} {streakDays === 1 ? 'day' : 'days'} streak
             </p>
           </div>
         )}

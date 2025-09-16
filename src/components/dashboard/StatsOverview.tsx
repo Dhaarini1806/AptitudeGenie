@@ -57,7 +57,7 @@ export function StatsOverview() {
             <span className="text-xs text-muted-foreground">Current Streak</span>
             <div className="flex items-center">
               <Award className="h-4 w-4 mr-1 text-amber-500" />
-              <span className="text-2xl font-bold">{user.streakDays}</span>
+              <span className="text-2xl font-bold">{user.streak_days}</span>
             </div>
           </div>
         </div>

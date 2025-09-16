@@ -1,10 +1,16 @@
-
 import { useState } from "react";
 import { useAuth } from "@/context/AuthContext";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardFooter,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card";
 import { AlertCircle, UserPlus } from "lucide-react";
 import { Alert, AlertDescription } from "@/components/ui/alert";
 
@@ -24,27 +30,23 @@ export function RegisterForm({ onSuccess, onLoginClick }: RegisterFormProps) {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setError("");
-
     if (!name || !email || !password || !confirmPassword) {
       setError("Please fill in all fields");
       return;
     }
-
     if (password !== confirmPassword) {
       setError("Passwords do not match");
       return;
     }
-
     if (password.length < 6) {
       setError("Password must be at least 6 characters");
       return;
     }
-
     try {
       await register(email, password, name);
       if (onSuccess) onSuccess();
     } catch (err) {
-      setError("Error creating account. Please try again.");
+      setError((err as Error).message || "Error creating account. Please try again.");
     }
   };
 
@@ -109,9 +111,9 @@ export function RegisterForm({ onSuccess, onLoginClick }: RegisterFormProps) {
               className="border-primary/30 focus:border-primary"
             />
           </div>
-          <Button 
-            type="submit" 
-            className="w-full genie-gradient text-white" 
+          <Button
+            type="submit"
+            className="w-full genie-gradient text-white"
             disabled={isLoading}
           >
             {isLoading ? "Creating Account..." : "Create Account"}

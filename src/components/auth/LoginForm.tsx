@@ -1,10 +1,16 @@
-
 import { useState } from "react";
 import { useAuth } from "@/context/AuthContext";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardFooter,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card";
 import { AlertCircle, LogIn } from "lucide-react";
 import { Alert, AlertDescription } from "@/components/ui/alert";
 
@@ -22,17 +28,15 @@ export function LoginForm({ onSuccess, onRegisterClick }: LoginFormProps) {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setError("");
-
     if (!email || !password) {
       setError("Please fill in all fields");
       return;
     }
-
     try {
       await login(email, password);
       if (onSuccess) onSuccess();
     } catch (err) {
-      setError("Invalid email or password");
+      setError((err as Error).message || "Invalid email or password");
     }
   };
 
@@ -67,7 +71,12 @@ export function LoginForm({ onSuccess, onRegisterClick }: LoginFormProps) {
           <div className="space-y-2">
             <div className="flex items-center justify-between">
               <Label htmlFor="password">Password</Label>
-              <Button type="button" variant="link" className="p-0 h-auto text-xs text-primary">
+              <Button
+                type="button"
+                variant="link"
+                className="p-0 h-auto text-xs text-primary"
+                onClick={() => alert("Forgot password feature coming soon")}
+              >
                 Forgot password?
               </Button>
             </div>
@@ -80,9 +89,9 @@ export function LoginForm({ onSuccess, onRegisterClick }: LoginFormProps) {
               className="border-primary/30 focus:border-primary"
             />
           </div>
-          <Button 
-            type="submit" 
-            className="w-full genie-gradient text-white" 
+          <Button
+            type="submit"
+            className="w-full genie-gradient text-white"
             disabled={isLoading}
           >
             {isLoading ? "Signing in..." : "Sign In"}
@@ -105,3 +114,4 @@ export function LoginForm({ onSuccess, onRegisterClick }: LoginFormProps) {
     </Card>
   );
 }
+
